@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Classic White / Dark Grey Calculator Shell -->
+    <color name="calc_body_white">#F3F4F6</color>
+    <color name="calc_body_border">#D1D5DB</color>
+    <color name="calc_inner_panel">#E5E7EB</color>
+
+    <!-- Authentic 2-Line LCD Display Colors -->
+    <color name="lcd_bezel_dark">#2B2E33</color>
+    <color name="lcd_screen_bg">#9EAD86</color>
+    <color name="lcd_screen_border">#7A8864</color>
+    <color name="lcd_text_primary">#141C11</color>
+    <color name="lcd_text_secondary">#273322</color>
+    <color name="lcd_text_Ghost">#8C9B75</color>
+
+    <!-- Button Colors (Classic White / Dark Grey Variant) -->
+    <color name="btn_sci_bg">#282B30</color>
+    <color name="btn_sci_pressed">#3E424A</color>
+    <color name="btn_sci_stroke">#1A1C20</color>
+
+    <color name="btn_num_bg">#3E434C</color>
+    <color name="btn_num_pressed">#555B66</color>
+    <color name="btn_num_stroke">#272A30</color>
+
+    <color name="btn_del_ac_bg">#C85260</color>
+    <color name="btn_del_ac_pressed">#DF6876</color>
+    <color name="btn_del_ac_stroke">#983844</color>
+
+    <color name="btn_control_bg">#6C727F</color>
+    <color name="btn_control_pressed">#858C9B</color>
+
+    <color name="btn_replay_pad_outer">#D6D9E0</color>
+    <color name="btn_replay_pad_inner">#E8EBF0</color>
+    <color name="btn_replay_pad_pressed">#C2C6D0</color>
+    <color name="btn_replay_stroke">#9CA3AF</color>
+
+    <!-- Labels & Shift/Alpha Legend Colors -->
+    <color name="text_btn_white">#FFFFFF</color>
+    <color name="text_shift_gold">#B88328</color>
+    <color name="text_alpha_red">#B83B48</color>
+    <color name="text_header_dark">#2C3038</color>
+    <color name="text_header_sub">#5C6270</color>
+</resources>

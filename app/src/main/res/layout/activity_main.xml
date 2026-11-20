@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootCalculatorBody"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_calculator_body"
+    android:orientation="vertical"
+    android:paddingStart="12dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="12dp"
+    android:weightSum="100">
+
+    <!-- ================= HEADER BRANDING ================= -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+
+        <TextView
+            android:id="@+id/tvBrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.08"
+            android:text="SCIENTIFIC"
+            android:textColor="@color/text_header_dark"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvSvPam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="S-V.P.A.M."
+            android:textColor="@color/text_alpha_red"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="serif"
+            android:text="fx-82MS"
+            android:textColor="@color/text_header_dark"
+            android:textSize="13sp"
+            android:textStyle="bold|italic" />
+    </RelativeLayout>
+
+    <!-- ================= 2-LINE LCD DISPLAY AREA ================= -->
+    <FrameLayout
+        android:id="@+id/lcdBezelContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="6dp"
+        android:layout_weight="21"
+        android:background="@drawable/bg_lcd_bezel"
+        android:padding="8dp">
+
+        <!-- Inner Greenish-Grey LCD Screen -->
+        <FrameLayout
+            android:id="@+id/lcdScreenSurface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_lcd_screen">
+
+            <!-- Subtle CameraX Preview inside the LCD while focusing on paper -->
+            <androidx.camera.view.PreviewView
+                android:id="@+id/cameraPreviewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.28"
+                android:visibility="gone" />
+
+            <!-- 2-Line LCD Text Layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp">
+
+                <!-- Top LCD Indicators Row (SHIFT / ALPHA / M / DEG / Camera & AI Status) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvIndShift"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:fontFamily="monospace"
+                        android:text="S"
+                        android:textColor="@color/lcd_text_primary"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/tvIndAlpha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:fontFamily="monospace"
+                        android:text="A"
+                        android:textColor="@color/lcd_text_primary"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/tvIndMemory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:fontFamily="monospace"
+                        android:text="M"
+                        android:textColor="@color/lcd_text_primary"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/tvIndAngle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="monospace"
+                        android:text="D"
+                        android:textColor="@color/lcd_text_primary"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCameraAiStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:gravity="end"
+                        android:text=""
+                        android:textColor="@color/lcd_text_secondary"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Upper Line: Expression / Scrollable Multi-Line AI Answer Area -->
+                <ScrollView
+                    android:id="@+id/scrollDisplayArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fadeScrollbars="false"
+                    android:fillViewport="true"
+                    android:scrollbars="vertical">
+
+                    <TextView
+                        android:id="@+id/tvExpressionDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:gravity="start|top"
+                        android:lineSpacingExtra="2dp"
+                        android:text=""
+                        android:textColor="@color/lcd_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </ScrollView>
+
+                <!-- Lower Line: 12-Digit Main Result Readout -->
+                <TextView
+                    android:id="@+id/tvResultDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:fontFamily="monospace"
+                    android:gravity="end|bottom"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="0."
+                    android:textColor="@color/lcd_text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+    </FrameLayout>
+
+    <!-- ================= CONTROL ROW + BIG CENTER REPLAY/CAMERA PAD + SCI ROW 1 ================= -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_weight="16">
+
+        <!-- Left Top Control Buttons: SHIFT & ALPHA -->
+        <LinearLayout
+            android:id="@+id/leftControlColumn"
+            android:layout_width="112dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <!-- Row: SHIFT & ALPHA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SHIFT"
+                        android:textColor="@color/text_shift_gold"
+                        android:textSize="8sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnShift"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:background="@drawable/bg_btn_control"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ALPHA"
+                        android:textColor="@color/text_alpha_red"
+                        android:textSize="8sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnAlpha"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:background="@drawable/bg_btn_control"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Row 1 Left Scientific Keys: x^-1 & nCr -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnReciprocal"
+                    style="@style/CalcSciButton"
+                    android:text="x⁻¹" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnNcr"
+                    style="@style/CalcSciButton"
+                    android:text="nCr" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- THE BIG ROUND BUTTON IN THE CENTER (Camera Auto-Focus Trigger + Up/Down Text Scroll) -->
+        <FrameLayout
+            android:id="@+id/bigRoundPadContainer"
+            android:layout_width="106dp"
+            android:layout_height="96dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_big_replay_button">
+
+            <!-- Upward Button Zone (Scrolls display text UPWARD) -->
+            <TextView
+                android:id="@+id/btnScrollUp"
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:layout_gravity="top|center_horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:soundEffectsEnabled="false"
+                android:gravity="center"
+                android:text="▲"
+                android:textColor="@color/text_header_sub"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- Downward Button Zone (Scrolls display text DOWNWARD) -->
+            <TextView
+                android:id="@+id/btnScrollDown"
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:soundEffectsEnabled="false"
+                android:gravity="center"
+                android:text="▼"
+                android:textColor="@color/text_header_sub"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- Left Zone -->
+            <TextView
+                android:id="@+id/btnCursorLeft"
+                android:layout_width="28dp"
+                android:layout_height="44dp"
+                android:layout_gravity="start|center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:soundEffectsEnabled="false"
+                android:gravity="center"
+                android:text="◀"
+                android:textColor="@color/text_header_sub"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <!-- Right Zone -->
+            <TextView
+                android:id="@+id/btnCursorRight"
+                android:layout_width="28dp"
+                android:layout_height="44dp"
+                android:layout_gravity="end|center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:soundEffectsEnabled="false"
+                android:gravity="center"
+                android:text="▶"
+                android:textColor="@color/text_header_sub"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <!-- Center Big Button Click Zone: Launches Camera -> Auto-Focuses on Paper -> Sends to AI -->
+            <TextView
+                android:id="@+id/btnBigCenterCamera"
+                android:layout_width="54dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:soundEffectsEnabled="false"
+                android:gravity="center"
+                android:text="REPLAY"
+                android:textColor="@color/text_header_sub"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Right Top Control Buttons: MODE/CLR & ON -->
+        <LinearLayout
+            android:id="@+id/rightControlColumn"
+            android:layout_width="112dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <!-- Row: MODE/CLR & ON -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MODE  CLR"
+                        android:textColor="@color/text_header_dark"
+                        android:textSize="8sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:background="@drawable/bg_btn_control"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ON"
+                        android:textColor="@color/text_header_dark"
+                        android:textSize="8sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnOn"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:background="@drawable/bg_btn_control"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Row 1 Right Scientific Keys: Pol( & x^3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnPol"
+                    style="@style/CalcSciButton"
+                    android:text="Pol(" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCube"
+                    style="@style/CalcSciButton"
+                    android:text="x³" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- ================= SCIENTIFIC KEYPAD ROWS (3 FULL 6-COLUMN ROWS) ================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="6dp"
+        android:layout_weight="21"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <!-- Scientific Row 2: a b/c, √, x², ^, log, ln -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnFraction"
+                style="@style/CalcSciButton"
+                android:text="a b/c" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSqrt"
+                style="@style/CalcSciButton"
+                android:text="√" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSquare"
+                style="@style/CalcSciButton"
+                android:text="x²" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPower"
+                style="@style/CalcSciButton"
+                android:text="^" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLog"
+                style="@style/CalcSciButton"
+                android:text="log" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLn"
+                style="@style/CalcSciButton"
+                android:text="ln" />
+        </LinearLayout>
+
+        <!-- Scientific Row 3: (−), °ʼ″, hyp, sin, cos, tan -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNegate"
+                style="@style/CalcSciButton"
+                android:text="(−)" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDms"
+                style="@style/CalcSciButton"
+                android:text="°’”" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnHyp"
+                style="@style/CalcSciButton"
+                android:text="hyp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSin"
+                style="@style/CalcSciButton"
+                android:text="sin" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCos"
+                style="@style/CalcSciButton"
+                android:text="cos" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTan"
+                style="@style/CalcSciButton"
+                android:text="tan" />
+        </LinearLayout>
+
+        <!-- Scientific Row 4: RCL, ENG, (, ), ,, M+ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRcl"
+                style="@style/CalcSciButton"
+                android:text="RCL" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEng"
+                style="@style/CalcSciButton"
+                android:text="ENG" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOpenParen"
+                style="@style/CalcSciButton"
+                android:text="(" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCloseParen"
+                style="@style/CalcSciButton"
+                android:text=")" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnComma"
+                style="@style/CalcSciButton"
+                android:text="," />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMPlus"
+                style="@style/CalcSciButton"
+                android:text="M+" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ================= MAIN NUMERIC & OPERATOR KEYPAD (4 ROWS x 5 COLUMNS) ================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="37"
+        android:orientation="vertical"
+        android:weightSum="4">
+
+        <!-- Main Row 1: 7, 8, 9, DEL, AC -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn7"
+                style="@style/CalcNumButton"
+                android:text="7" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn8"
+                style="@style/CalcNumButton"
+                android:text="8" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn9"
+                style="@style/CalcNumButton"
+                android:text="9" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDel"
+                style="@style/CalcDelAcButton"
+                android:text="DEL" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAc"
+                style="@style/CalcDelAcButton"
+                android:text="AC" />
+        </LinearLayout>
+
+        <!-- Main Row 2: 4, 5, 6, ×, ÷ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn4"
+                style="@style/CalcNumButton"
+                android:text="4" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn5"
+                style="@style/CalcNumButton"
+                android:text="5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn6"
+                style="@style/CalcNumButton"
+                android:text="6" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMultiply"
+                style="@style/CalcNumButton"
+                android:text="×" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDivide"
+                style="@style/CalcNumButton"
+                android:text="÷" />
+        </LinearLayout>
+
+        <!-- Main Row 3: 1, 2, 3, +, − -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn1"
+                style="@style/CalcNumButton"
+                android:text="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn2"
+                style="@style/CalcNumButton"
+                android:text="2" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn3"
+                style="@style/CalcNumButton"
+                android:text="3" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAdd"
+                style="@style/CalcNumButton"
+                android:text="+" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubtract"
+                style="@style/CalcNumButton"
+                android:text="−" />
+        </LinearLayout>
+
+        <!-- Main Row 4: 0, ., EXP, Ans, = -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn0"
+                style="@style/CalcNumButton"
+                android:text="0" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDot"
+                style="@style/CalcNumButton"
+                android:text="." />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnExp"
+                style="@style/CalcNumButton"
+                android:text="EXP" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAns"
+                style="@style/CalcNumButton"
+                android:text="Ans" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEquals"
+                style="@style/CalcNumButton"
+                android:text="=" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
